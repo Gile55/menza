@@ -1,20 +1,21 @@
-﻿using Dapper;
-using System.Data.SqlClient;
-using StudentskaMenza.Entiteti;
-using SudentskaMenza.Repozitoriji;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace StudentskaMenza.Repozitoriji
+﻿namespace StudentskaMenza.Repozitoriji
 {
+    using Dapper;
+    using StudentskaMenza.Entiteti;
+    using SudentskaMenza.Repozitoriji;
+    using SudentskaMenzaUWP.Common;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.SqlClient;
+    using System.Linq;
+
     public class StudentRepozitorij : IRepozitorij<Student>
     {
-        private readonly SqlConnection _dbConnection;
+        private readonly IAppSettings appSettings;
 
-        public StudentRepozitorij(SqlConnection dbConnection)
+        public StudentRepozitorij(IAppSettings appSettings)
         {
-            _dbConnection = dbConnection;
+            this.appSettings = appSettings;
         }
 
         public Student dohvatiJedan()
@@ -25,11 +26,15 @@ namespace StudentskaMenza.Repozitoriji
 
         public List<Student> dohvatiSve()
         {
-            return _dbConnection.Query<Student>("SELECT s.id, s.puno_ime PunoIme, s.xica, s.bodovi, s.lozinka_hash LozinkaHash FROM STUDENT s").AsList();
+            using var connection = new SqlConnection(this.appSettings.ConnectionString);
+
+            return connection.Query<Student>("SELECT s.id, s.puno_ime PunoIme, s.xica, s.bodovi, s.lozinka_hash LozinkaHash FROM STUDENT s").AsList();
         }
 
         public void spremi(Student t)
         {
+            using var connection = new SqlConnection(this.appSettings.ConnectionString);
+
             const string sql = @"INSERT	INTO STUDENT(
             puno_ime,
 		    xica,
@@ -42,7 +47,7 @@ namespace StudentskaMenza.Repozitoriji
 		        @Bodovi, 
 		        @LozinkaHash
 		    );";
-            var count = _dbConnection.Execute(sql, t);
+            var count = connection.Execute(sql, t);
             if (count != 1)
             {
                 throw new Exception("Spremanje neuspjesno");

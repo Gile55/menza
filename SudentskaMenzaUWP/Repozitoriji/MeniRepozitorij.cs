@@ -1,35 +1,38 @@
-﻿using Dapper;
-using System.Data.SqlClient;
-using StudentskaMenza.Entiteti;
-using SudentskaMenza.Repozitoriji;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace ORM_migration_test.Repozitoriji
+﻿namespace ORM_migration_test.Repozitoriji
 {
+    using Dapper;
+    using StudentskaMenza.Entiteti;
+    using SudentskaMenza.Repozitoriji;
+    using SudentskaMenzaUWP.Common;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.SqlClient;
+    using System.Linq;
+
     internal class MeniRepozitorij : IRepozitorij<Meni>
     {
-        private readonly SqlConnection _dbConnection;
-
+        private readonly IAppSettings appSettings;
         public Meni dohvatiJedan()
         {
             throw new NotImplementedException();
         }
 
-        public MeniRepozitorij(SqlConnection dbConnection)
+        public MeniRepozitorij(IAppSettings settings)
         {
-            _dbConnection = dbConnection;
+            this.appSettings = settings;
         }
 
         public List<Meni> dohvatiSve()
         {
+            using var connection = new SqlConnection(this.appSettings.ConnectionString);
+
             var sql = @"SELECT m.id, m.naziv, j.naziv, j.tip
                 FROM MENI m
                 INNER JOIN MENI_JELO mj ON mj.meni_id = m.Id
                 INNER JOIN JELO j ON j.id = mj.jelo_id";
 
-            var meniji = _dbConnection.Query<Meni, Jelo, Meni>(sql, (meni, jelo) =>
+
+            var meniji = connection.Query<Meni, Jelo, Meni>(sql, (meni, jelo) =>
             {
                 meni.Jela.Add(jelo);
                 return meni;
@@ -46,13 +49,15 @@ namespace ORM_migration_test.Repozitoriji
 
         public void spremi(Meni t)
         {
+            using var connection = new SqlConnection(this.appSettings.ConnectionString);
+
             const string sql = @"INSERT	INTO MENI(
                 naziv
 		    )
             VALUES(
                 @Naziv
 		    );";
-            var count = _dbConnection.Execute(sql, t);
+            var count = connection.Execute(sql, t);
             if (count != 1)
             {
                 throw new Exception("Spremanje neuspjesno");

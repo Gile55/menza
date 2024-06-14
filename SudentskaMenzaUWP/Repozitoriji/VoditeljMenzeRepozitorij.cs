@@ -1,22 +1,22 @@
-﻿using Dapper;
-using System.Data.SqlClient;
-using StudentskaMenza.Entiteti;
-using SudentskaMenza.Repozitoriji;
-using System;
-using System.Collections.Generic;
-
-
-namespace SudentskaMenzaUWP.Repozitoriji
+﻿namespace SudentskaMenzaUWP.Repozitoriji
 {
+    using Dapper;
+    using System.Data.SqlClient;
+    using StudentskaMenza.Entiteti;
+    using SudentskaMenza.Repozitoriji;
+    using System;
+    using System.Collections.Generic;
+    using SudentskaMenzaUWP.Common;
+
+
     internal class VoditeljMenzeRepozitorij : IRepozitorij<VoditeljMenze>
     {
-        private readonly SqlConnection _dbConnection;
+        private readonly IAppSettings appSettings;
 
-        public VoditeljMenzeRepozitorij(SqlConnection dbConnection)
+        public VoditeljMenzeRepozitorij(IAppSettings appSettings)
         {
-            _dbConnection = dbConnection;
+            this.appSettings = appSettings;
         }
-
 
         public VoditeljMenze dohvatiJedan()
         {
@@ -30,6 +30,8 @@ namespace SudentskaMenzaUWP.Repozitoriji
 
         public void spremi(VoditeljMenze t)
         {
+            using var connection = new SqlConnection(this.appSettings.ConnectionString);
+
             const string sql = @"INSERT	INTO STUDENT(
             puno_ime,
 		    korisnicko_ime,
@@ -40,7 +42,9 @@ namespace SudentskaMenzaUWP.Repozitoriji
 		        @KorisnickoIme,
 		        @LozinkaHash
 		    );";
-            var count = _dbConnection.Execute(sql, t);
+
+
+            var count = connection.Execute(sql, t);
             if (count != 1)
             {
                 throw new Exception("Spremanje neuspjesno");

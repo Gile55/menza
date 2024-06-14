@@ -14,13 +14,13 @@ namespace SudentskaMenzaUWP.Stranice
     /// </summary>
     public sealed partial class Prijava : Page
     {
-        private PrijavaViewModel ViewModel { get { return (PrijavaViewModel)DataContext; } }
+        private PrijavaViewModel ViewModel { get { return (PrijavaViewModel)this.DataContext; } }
 
         public Prijava()
         {
             this.InitializeComponent();
             var container = ((App)Application.Current).Container;
-            DataContext = ActivatorUtilities.GetServiceOrCreateInstance(container, typeof(PrijavaViewModel));
+            this.DataContext = ActivatorUtilities.GetServiceOrCreateInstance(container, typeof(PrijavaViewModel));
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -30,20 +30,20 @@ namespace SudentskaMenzaUWP.Stranice
 
         private void OdabirTipaKorisnikaPromjenjen(object sender, SelectionChangedEventArgs e)
         {
-            ViewModel.OdabirTipaKorisnikaPromjenjen((sender as ListView).SelectedItem as TipKorisnika);
-            ddbOdabirTipaKorisnika.Flyout.Hide();
-            ddbOdabirTipaKorisnika.Content = ViewModel.OdabraniTipKorisnika.Naziv;
-            lblIdentifikacijskoPolje.Text = ViewModel.IdentifikacijskoPolje;
+            this.ViewModel.OdabirTipaKorisnikaPromjenjen((sender as ListView).SelectedItem as TipKorisnika);
+            this.ddbOdabirTipaKorisnika.Flyout.Hide();
+            this.ddbOdabirTipaKorisnika.Content = this.ViewModel.OdabraniTipKorisnika.Naziv;
+            this.lblIdentifikacijskoPolje.Text = this.ViewModel.IdentifikacijskoPolje;
         }
 
         private void Prijava_Klik(object sender, RoutedEventArgs e)
         {
-            ViewModel.Prijava(ViewModel.OdabraniTipKorisnika.Oznaka, tbIdentifikacijskoPolje.Text, tbLozinka.Text);
+            this.ViewModel.Prijava(this.ViewModel.OdabraniTipKorisnika.Oznaka, this.tbIdentifikacijskoPolje.Text, this.tbLozinka.Text);
         }
 
         private void Registracija_Klik(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(Registracija));
+            this.Frame.Navigate(typeof(Registracija));
         }
     }
 }

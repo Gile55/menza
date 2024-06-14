@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mm\\Desktop\\StudentskaMenza\\ORM-migration-test\\StudentskaMenzaDataLayer.csproj": {}
+    "C:\\Users\\Mario\\source\\repos\\menza\\ORM-migration-test\\StudentskaMenzaDataLayer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mm\\Desktop\\StudentskaMenza\\ORM-migration-test\\StudentskaMenzaDataLayer.csproj": {
+    "C:\\Users\\Mario\\source\\repos\\menza\\ORM-migration-test\\StudentskaMenzaDataLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mm\\Desktop\\StudentskaMenza\\ORM-migration-test\\StudentskaMenzaDataLayer.csproj",
+        "projectUniqueName": "C:\\Users\\Mario\\source\\repos\\menza\\ORM-migration-test\\StudentskaMenzaDataLayer.csproj",
         "projectName": "StudentskaMenzaDataLayer",
-        "projectPath": "C:\\Users\\mm\\Desktop\\StudentskaMenza\\ORM-migration-test\\StudentskaMenzaDataLayer.csproj",
-        "packagesPath": "C:\\Users\\mm\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mm\\Desktop\\StudentskaMenza\\ORM-migration-test\\obj\\",
+        "projectPath": "C:\\Users\\Mario\\source\\repos\\menza\\ORM-migration-test\\StudentskaMenzaDataLayer.csproj",
+        "packagesPath": "C:\\Users\\Mario\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Mario\\source\\repos\\menza\\ORM-migration-test\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\mm\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Mario\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -38,11 +38,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -98,7 +93,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

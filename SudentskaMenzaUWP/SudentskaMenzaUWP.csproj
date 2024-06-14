@@ -119,6 +119,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\AppSettings.cs" />
     <Compile Include="Entiteti\Jelo.cs" />
     <Compile Include="Entiteti\Meni.cs" />
     <Compile Include="Entiteti\MeniDan.cs" />

@@ -32,7 +32,7 @@ namespace SudentskaMenzaUWP.Servisi
         internal bool registracijaStudent(string xica, string punoIme, string lozinka)
         {
             var lozinkaHash = BCrypt.Net.BCrypt.HashPassword(lozinka);
-            studentRepozitorij.spremi(new Student
+            this.studentRepozitorij.spremi(new Student
             {
                 Xica = xica,
                 PunoIme = punoIme,
@@ -45,7 +45,7 @@ namespace SudentskaMenzaUWP.Servisi
         internal bool registracijaVoditeljMenze(string korisnickoIme, string punoIme, string lozinka)
         {
             var lozinkaHash = BCrypt.Net.BCrypt.HashPassword(lozinka);
-            voditeljMenzeRepozitorij.spremi(new VoditeljMenze
+            this.voditeljMenzeRepozitorij.spremi(new VoditeljMenze
             {
                 KorisnickoIme = korisnickoIme,
                 PunoIme = punoIme,

@@ -1,19 +1,20 @@
-﻿using System.Data.SqlClient;
-using Microsoft.Extensions.DependencyInjection;
-using StudentskaMenza.Repozitoriji;
-using SudentskaMenzaUWP.Repozitoriji;
-using SudentskaMenzaUWP.Servisi;
-using SudentskaMenzaUWP.ViewModel;
-using System;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-using System.Diagnostics;
-
-namespace SudentskaMenzaUWP
+﻿namespace SudentskaMenzaUWP
 {
+    using Microsoft.Extensions.DependencyInjection;
+    using StudentskaMenza.Repozitoriji;
+    using SudentskaMenzaUWP.Common;
+    using SudentskaMenzaUWP.Repozitoriji;
+    using SudentskaMenzaUWP.Servisi;
+    using SudentskaMenzaUWP.ViewModel;
+    using System;
+    using System.Data.SqlClient;
+    using System.Diagnostics;
+    using Windows.ApplicationModel;
+    using Windows.ApplicationModel.Activation;
+    using Windows.UI.Xaml;
+    using Windows.UI.Xaml.Controls;
+    using Windows.UI.Xaml.Navigation;
+
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
@@ -26,8 +27,8 @@ namespace SudentskaMenzaUWP
         public App()
         {
             this.InitializeComponent();
-            this.Suspending += OnSuspending;
-            Container = ConfigureDependencyInjection();
+            this.Suspending += this.OnSuspending;
+            this.Container = this.ConfigureDependencyInjection();
         }
 
         public IServiceProvider Container { get; }
@@ -36,12 +37,13 @@ namespace SudentskaMenzaUWP
         {
             var serviceCollection = new ServiceCollection();
 
+            serviceCollection.AddSingleton<IAppSettings, AppSettings>();
             serviceCollection.AddSingleton<StudentRepozitorij, StudentRepozitorij>();
             serviceCollection.AddSingleton<VoditeljMenzeRepozitorij, VoditeljMenzeRepozitorij>();
             serviceCollection.AddSingleton<KorisnickiServis, KorisnickiServis>();
             serviceCollection.AddTransient<PrijavaViewModel, PrijavaViewModel>();
             serviceCollection.AddTransient<RegistracijaViewModel, RegistracijaViewModel>();
-            
+
             var builder = new SqlConnectionStringBuilder();
             builder.ApplicationName = "StudentskaMenzaUWP";
             builder.ConnectTimeout = 30;
@@ -52,13 +54,10 @@ namespace SudentskaMenzaUWP
             builder.Encrypt = false;
             builder.TrustServerCertificate = true;
             Debug.WriteLine(builder.ConnectionString);
-            
-            serviceCollection.AddTransient<SqlConnection, SqlConnection>(
-                (sp) => new SqlConnection("Server=.\\SQLEXPRESS;Database=menza_1;Trusted_Connection=True;Integrated Security=True;Connect Timeout=30;TrustServerCertificate=True;Application Name=StudentskaMenzaUWP;ApplicationIntent=ReadWrite")
-            );
+
             return serviceCollection.BuildServiceProvider();
         }
-        
+
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
@@ -76,7 +75,7 @@ namespace SudentskaMenzaUWP
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 
-                rootFrame.NavigationFailed += OnNavigationFailed;
+                rootFrame.NavigationFailed += this.OnNavigationFailed;
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
